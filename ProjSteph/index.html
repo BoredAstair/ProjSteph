@@ -48,7 +48,7 @@
   </body>
   <script>
     async function createPdf1() {
-      const url = "http://192.168.1.103/projsteph/ressources/pdf1.pdf"
+      const url = "https://glittering-wisp-e01bff.netlify.app/projsteph/ressources/pdf1.pdf"
       const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
 
       const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
@@ -128,7 +128,7 @@
       document.getElementById('pdf').src = pdfDataUri;
     }
     async function createPdf2() {
-      const url = "http://192.168.1.103/projsteph/ressources/pdf2.pdf"
+      const url = "https://glittering-wisp-e01bff.netlify.app/projsteph/ressources/pdf2.pdf"
       const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
 
       const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
