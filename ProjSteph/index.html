@@ -1,0 +1,239 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.js"></script>
+  </head>
+
+  <body class="split-row">
+    <div class="split-col eightper" id="checkbox">
+      <div class="center">
+        <label for="datereal">Date de réalisation : <input type="date" name="datereal" id="datereal" onchange="createPdf1(),createPdf2()"></label>
+      </div>
+        <div class="split-row">
+            <div class="card">
+                <h2>Candidat :</h2>
+                <label for="nom">Nom du candidat : <input type="text" name="nom" id="nom" onchange="createPdf1(),createPdf2()"></label>
+                <label for="prenom">Prénom du candidat : <input type="text" name="prenom" id="prenom" onchange="createPdf1(),createPdf2()"></label>
+                <label for="birth">Date de naissance du candidat : <input type="date" name="birth" id="birth" onchange="createPdf1(),createPdf2()"></label>
+            </div>
+            <div class="card">
+                <h2>Session :</h2>
+                <label for="ses_start">Du :<input type="date" name="ses_start" id="ses_start" onchange="createPdf1(),createPdf2()"></label>
+                <label for="ses_end">Au :<input type="date" name="ses_end" id="ses_end" onchange="createPdf1(),createPdf2()"></label>
+            </div>
+        </div>
+        <div class="center card">
+            <h2>Validation Compétences</h2>
+
+            <div id="small">
+                <label for="validated">Candidat certifié : <input type="checkbox" name="validated" id="validated" onchange="createPdf1(),createPdf2()"></label>
+            </div>
+            <div class="no-inline">
+                <label for="comp1">Compétence 1 : <input type="checkbox" name="comp1" id="comp1" onchange="createPdf1(),createPdf2()"></label>
+                <label for="comp2">Compétence 2 : <input type="checkbox" name="comp2" id="comp2" onchange="createPdf1(),createPdf2()"></label>
+                <label for="comp3">Compétence 3 : <input type="checkbox" name="comp3" id="comp3" onchange="createPdf1(),createPdf2()"></label>
+                <label for="comp4">Compétence 4 : <input type="checkbox" name="comp4" id="comp4" onchange="createPdf1(),createPdf2()"></label>
+                <label for="comp5">Compétence 5 : <input type="checkbox" name="comp5" id="comp5" onchange="createPdf1(),createPdf2()"></label>
+                <label for="comp6">Compétence 6 : <input type="checkbox" name="comp6" id="comp6" onchange="createPdf1(),createPdf2()"></label>
+                <label for="comp7">Compétence 7 : <input type="checkbox" name="comp7" id="comp7" onchange="createPdf1(),createPdf2()"></label>
+                <label for="comp8">Compétence 8 : <input type="checkbox" name="comp8" id="comp8" onchange="createPdf1(),createPdf2()"></label>
+            </div>
+        </div>
+    </div>
+    <div class="split-col eightper">
+      <iframe id="pdf" style="width: 100%; height: 100%;"></iframe>
+      <iframe id="pdf2" style="width: 100%; height: 100%;"></iframe>
+    </div>
+  </body>
+  <script>
+    async function createPdf1() {
+      const url = "http://192.168.1.103/projsteph/ressources/pdf1.pdf"
+      const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
+
+      const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+
+      const form = pdfDoc.getForm()
+
+      const nameField = form.getTextField('Nom')
+      const case1true = form.getCheckBox("Case à cocher1")
+      const case1false = form.getCheckBox("Case à cocher8")
+      const case2true = form.getCheckBox("Case à cocher2")
+      const case2false = form.getCheckBox("Case à cocher9")
+      const case3true = form.getCheckBox("Case à cocher3")
+      const case3false = form.getCheckBox("Case à cocher10")
+      const case4true = form.getCheckBox("Case à cocher4")
+      const case4false = form.getCheckBox("Case à cocher11")
+      const case5true = form.getCheckBox("Case à cocher5")
+      const case5false = form.getCheckBox("Case à cocher12")
+      const case6true = form.getCheckBox("Case à cocher6")
+      const case6false = form.getCheckBox("Case à cocher13")
+      const case7true = form.getCheckBox("Case à cocher7")
+      const case7false = form.getCheckBox("Case à cocher14")
+      const dropdown = form.getDropdown("obtention")
+      const datereal = form.getTextField("Date")
+      
+      nameField.setText(document.getElementById("nom").value + " " + document.getElementById("prenom").value)
+      datereal.setText(document.getElementById("datereal").value)
+
+      if(document.getElementById("validated").checked == true){
+        case1true.check();
+        case2true.check();
+        case3true.check();
+        case4true.check();
+        case5true.check();
+        case6true.check();
+        case7true.check();
+        dropdown.select("a obtenu");
+      } else {
+        if(document.getElementById("comp1").checked == true){
+        case1true.check()
+      } else {
+        case1false.check()
+      }
+      if(document.getElementById("comp2").checked == true){
+        case2true.check()
+      } else {
+        case2false.check()
+      }
+      if(document.getElementById("comp3").checked == true){
+        case3true.check()
+      } else {
+        case3false.check()
+      }
+      if(document.getElementById("comp4").checked == true){
+        case4true.check()
+      } else {
+        case4false.check()
+      }
+      if(document.getElementById("comp5").checked == true){
+        case5true.check()
+      } else {
+        case5false.check()
+      }
+      if(document.getElementById("comp6").checked == true){
+        case6true.check()
+      } else {
+        case6false.check()
+      }
+      if(document.getElementById("comp7").checked == true){
+        case7true.check()
+      } else {
+        case7false.check()
+      }
+      dropdown.select("n'a pas obtenu");
+      }
+
+      const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+      document.getElementById('pdf').src = pdfDataUri;
+    }
+    async function createPdf2() {
+      const url = "http://192.168.1.103/projsteph/ressources/pdf2.pdf"
+      const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
+
+      const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+
+      const form = pdfDoc.getForm()
+
+      form.getTextField("Nom").setText(document.getElementById("nom").value)
+      form.getTextField("Prénom").setText(document.getElementById("prenom").value)
+      form.getTextField("Date de naissance").setText(document.getElementById("birth").value)
+      form.getTextField("Date début").setText(document.getElementById("ses_start").value)
+      form.getTextField("Date fin").setText(document.getElementById("ses_end").value)
+
+      const case1true = form.getCheckBox("Acquise")
+      const case1false = form.getCheckBox("Non acquise")
+      const case2true = form.getCheckBox("Acquise_2")
+      const case2false = form.getCheckBox("Non acquise_2")
+      const case3true = form.getCheckBox("Acquise_3")
+      const case3false = form.getCheckBox("Non acquise_3")
+      const case4true = form.getCheckBox("Acquise_4")
+      const case4false = form.getCheckBox("Non acquise_4")
+      const case5true = form.getCheckBox("Acquise_5")
+      const case5false = form.getCheckBox("Non acquise_5")
+      const case6true = form.getCheckBox("Acquise_6")
+      const case6false = form.getCheckBox("Non acquise_6")
+      const case7true = form.getCheckBox("Acquise_7")
+      const case7false = form.getCheckBox("Non acquise_7")
+      const case8true = form.getCheckBox("Acquise_8")
+      const case8false = form.getCheckBox("Non acquise_8")
+      form.getTextField("Date Certification").setText(document.getElementById("datereal").value)
+
+      if(document.getElementById("validated").checked == true){
+        case1true.check();
+        case2true.check();
+        case3true.check();
+        case4true.check();
+        case5true.check();
+        case6true.check();
+        case7true.check();
+        case8true.check();
+        form.getCheckBox("OUI").check()
+        form.getCheckBox("Check Box1").check()
+        form.getCheckBox("Check Box3").check()
+        form.getCheckBox("Check Box5").check()
+        form.getCheckBox("Check Box7").check()
+        form.getCheckBox("Check Box9").check()
+        form.getCheckBox("Check Box11").check()
+        form.getCheckBox("Check Box13").check()
+        form.getCheckBox("Check Box15").check()
+        form.getCheckBox("Check Box17").check()
+        form.getCheckBox("Check Box19").check()
+        form.getCheckBox("Check Box21").check()
+        form.getCheckBox("Check Box23").check()
+        form.getCheckBox("Check Box25").check()
+        form.getCheckBox("Check Box27").check()
+        form.getCheckBox("Check Box29").check()
+        form.getCheckBox("Check Box31").check()
+        form.getCheckBox("Check Box33").check()
+      } else {
+        if(document.getElementById("comp1").checked == true){
+        case1true.check()
+      } else {
+        case1false.check()
+      }
+      if(document.getElementById("comp2").checked == true){
+        case2true.check()
+      } else {
+        case2false.check()
+      }
+      if(document.getElementById("comp3").checked == true){
+        case3true.check()
+      } else {
+        case3false.check()
+      }
+      if(document.getElementById("comp4").checked == true){
+        case4true.check()
+      } else {
+        case4false.check()
+      }
+      if(document.getElementById("comp5").checked == true){
+        case5true.check()
+      } else {
+        case5false.check()
+      }
+      if(document.getElementById("comp6").checked == true){
+        case6true.check()
+      } else {
+        case6false.check()
+      }
+      if(document.getElementById("comp7").checked == true){
+        case7true.check()
+      } else {
+        case7false.check()
+      }
+      if(document.getElementById("comp8").checked == true){
+        case8true.check()
+      } else {
+        case8false.check()
+      }
+      form.getCheckBox("NON").check()
+      }
+
+      const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+      document.getElementById('pdf2').src = pdfDataUri;
+    }
+    createPdf1()
+    createPdf2();
+  </script>
+</html>

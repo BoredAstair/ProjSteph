@@ -1,0 +1,69 @@
+html,body{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #14213D;
+    width: 100%;
+    height: 100%;
+}
+
+.split-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.split-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+input{
+    display: inline;
+}
+
+label{
+    display: block;
+}
+
+.eightper{
+    width: 80%;
+    height: 80%;
+}
+
+#Checkbox{
+    background-color: #E5E5E5;
+    border-radius: 10px;
+    margin: 5%;
+}
+
+.no-inline label{
+    display: block;
+}
+
+.center{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+#small{
+    margin: 2%;
+}
+
+h2{
+    background-color: #FCA311;
+    border-radius: 20px;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 20px;
+    width: 80%;
+}
